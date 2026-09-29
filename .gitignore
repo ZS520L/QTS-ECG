@@ -26,3 +26,9 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# latex build artefacts
+*.aux
+*.log
+*.out
+*.synctex.gz
