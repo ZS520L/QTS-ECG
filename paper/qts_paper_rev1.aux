@@ -1,0 +1,123 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Reconstruction-Based Methods}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Representation-Based Methods}{4}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Multi-Scale Convolutional Methods}{4}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Template Matching in ECG Analysis}{4}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Sparse Coding and Dictionary Learning}{4}{subsection.2.5}\protected@file@percent }
+\newlabel{sec:sparse-coding}{{2.5}{4}{Sparse Coding and Dictionary Learning}{subsection.2.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Recent ECG-Specific Anomaly Detection and Benchmarks}{5}{subsection.2.6}\protected@file@percent }
+\newlabel{sec:ecg-specific}{{2.6}{5}{Recent ECG-Specific Anomaly Detection and Benchmarks}{subsection.2.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{5}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Problem Formulation}{5}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Theoretical Foundation}{5}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:theory}{{3.2}{5}{Theoretical Foundation}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Finite Prototype Coverage Assumption.}{5}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Covering Number Bound on Normal Approximation Error.}{5}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}{\color  {blue}Detection Separation Intuition.}}{6}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Reconstruction Methods Lack a Separation Guarantee{\color  {blue} (Worst-Case Intuition)}.}{6}{subsubsection.3.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.5}Monotonicity of Detection Performance.}{6}{subsubsection.3.2.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces {\color  {blue}Eight paradigms of unsupervised anomaly detection on ECG, each with its core mechanism, a characteristic strength, and a characteristic failure mode. (1) QTS (ours): $M$ prototypes cover the normal manifold directly in input space --- strength: inspectable ECG-waveform codebook and per-window explanations; risk: subtle, distributed deviations below the sample-wise noise floor. (2) Deep SVDD: a single hypersphere centre $c$ in a learned feature space --- strength: strong, compact one-class boundary (best PTB-XL AUROC here); risk: mode collapse and no input-space interpretability. (3) Autoencoder: reconstruction objective --- strength: simple, general-purpose; risk: no separation guarantee (Proposition~3). (4) TranAD: forecasting-based residual scoring --- strength: sensitive to local prediction breaks; risk: fooled by smooth anomalies. (5) DAGMM: GMM density in latent space --- strength: probabilistic scores; risk: wrong distributional family yields high likelihood for anomalies. (6) BeatGAN: adversarial generator --- strength: robust to augmentation-rich regimes; risk: over-generalisation covers anomalous morphologies. (7) OC-SVM: kernel boundary --- strength: convex, parameter-light; risk: cannot capture multimodal normal distributions. (8) Isolation Forest: tree-based partitioning --- strength: near-zero training cost; risk: axis-aligned splits ignore morphological structure.}}}{7}{figure.1}\protected@file@percent }
+\newlabel{fig:paradigm}{{1}{7}{\rev {Eight paradigms of unsupervised anomaly detection on ECG, each with its core mechanism, a characteristic strength, and a characteristic failure mode. (1) QTS (ours): $M$ prototypes cover the normal manifold directly in input space --- strength: inspectable ECG-waveform codebook and per-window explanations; risk: subtle, distributed deviations below the sample-wise noise floor. (2) Deep SVDD: a single hypersphere centre $c$ in a learned feature space --- strength: strong, compact one-class boundary (best PTB-XL AUROC here); risk: mode collapse and no input-space interpretability. (3) Autoencoder: reconstruction objective --- strength: simple, general-purpose; risk: no separation guarantee (Proposition~3). (4) TranAD: forecasting-based residual scoring --- strength: sensitive to local prediction breaks; risk: fooled by smooth anomalies. (5) DAGMM: GMM density in latent space --- strength: probabilistic scores; risk: wrong distributional family yields high likelihood for anomalies. (6) BeatGAN: adversarial generator --- strength: robust to augmentation-rich regimes; risk: over-generalisation covers anomalous morphologies. (7) OC-SVM: kernel boundary --- strength: convex, parameter-light; risk: cannot capture multimodal normal distributions. (8) Isolation Forest: tree-based partitioning --- strength: near-zero training cost; risk: axis-aligned splits ignore morphological structure.}}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Quadratic Template Scoring}{8}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}Single-Scale Formulation.}{8}{subsubsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}Efficient Convolutional Implementation.}{8}{subsubsection.3.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Algorithm 1.} QTS forward pass.}}{9}{table.1}\protected@file@percent }
+\newlabel{alg:qts}{{1}{9}{\textbf {Algorithm 1.} QTS forward pass}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces QTS forward pass. The squared-distance score $\|\mathbf  {x}_t + \mathbf  {w}_k\|^2$ is decomposed exactly into three convolutional terms: window energy $E_t$, cross-correlation $G_{k,t}$, and template norm $r_k$. The architecture contains no activation functions, no batch normalisation, no decoder --- only two Conv1D operations.}}{9}{figure.2}\protected@file@percent }
+\newlabel{fig:arch}{{2}{9}{QTS forward pass. The squared-distance score $\|\mathbf {x}_t + \mathbf {w}_k\|^2$ is decomposed exactly into three convolutional terms: window energy $E_t$, cross-correlation $G_{k,t}$, and template norm $r_k$. The architecture contains no activation functions, no batch normalisation, no decoder --- only two Conv1D operations}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}QT-Interval Alignment.}{9}{subsubsection.3.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces QT-interval alignment of the QTS template length. A representative Lead II ECG beat is annotated with the PQRST complex; the highlighted blue rectangle marks the 310\,ms ($K = 155$) template window, spanning Q-onset to T-end. The three bars below compare candidate template lengths (70\,/\,310\,/\,630\,ms) with their respective signal coverage (QRS\,/\,QRS+ST+T\,/\,full cycle).}}{10}{figure.3}\protected@file@percent }
+\newlabel{fig:qt}{{3}{10}{QT-interval alignment of the QTS template length. A representative Lead II ECG beat is annotated with the PQRST complex; the highlighted blue rectangle marks the 310\,ms ($K = 155$) template window, spanning Q-onset to T-end. The three bars below compare candidate template lengths (70\,/\,310\,/\,630\,ms) with their respective signal coverage (QRS\,/\,QRS+ST+T\,/\,full cycle)}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Training Objective}{10}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Template Initialisation}{10}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Relationship to Classical Methods}{10}{subsection.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Setup}{11}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Datasets}{11}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Baselines}{11}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Unsupervised anomaly detection baselines compared against QTS. {\color  {blue}Parameter counts are measured from our implementations (trainable parameters), not taken from the original papers.}}}{11}{table.2}\protected@file@percent }
+\newlabel{tab:baselines}{{2}{11}{Unsupervised anomaly detection baselines compared against QTS. \rev {Parameter counts are measured from our implementations (trainable parameters), not taken from the original papers.}}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Implementation Details}{12}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces QTS hyperparameter configuration.}}{12}{table.3}\protected@file@percent }
+\newlabel{tab:hyper}{{3}{12}{QTS hyperparameter configuration}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Evaluation Metrics}{12}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{12}{section.5}\protected@file@percent }
+\newlabel{sec:results}{{5}{12}{Results}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Main Results}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Anomaly detection performance (mean $\pm $ std over {\color  {blue}10 pre-registered} random seeds). Best results in \textbf  {bold}. {\color  {blue}Revised values; all methods share the same seeds and splits.}}}{13}{table.4}\protected@file@percent }
+\newlabel{tab:main}{{4}{13}{Anomaly detection performance (mean $\pm $ std over \rev {10 pre-registered} random seeds). Best results in \textbf {bold}. \rev {Revised values; all methods share the same seeds and splits.}}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces {\color  {blue}Per-seed AUROC of all 13 methods on (a) PTB-XL and (b) CPSC 2018 over the ten pre-registered seeds; methods are ordered by seed-mean AUROC. Small dots are individual seeds (grey, or coloured for the highlighted methods), the thin bar spans the seed range and the diamond marks the seed mean; QTS is shown in red and Deep SVDD in blue.} The ordering of methods is stable across seeds; the Deep SVDD--QTS gap on PTB-XL and the QTS lead on CPSC 2018 are visible on nearly every seed, and the three collapsed VAE runs on CPSC 2018 (seeds 2, 5, 6) are identifiable as isolated low points.}}{13}{figure.4}\protected@file@percent }
+\newlabel{fig:perseed}{{4}{13}{\rev {Per-seed AUROC of all 13 methods on (a) PTB-XL and (b) CPSC 2018 over the ten pre-registered seeds; methods are ordered by seed-mean AUROC. Small dots are individual seeds (grey, or coloured for the highlighted methods), the thin bar spans the seed range and the diamond marks the seed mean; QTS is shown in red and Deep SVDD in blue.} The ordering of methods is stable across seeds; the Deep SVDD--QTS gap on PTB-XL and the QTS lead on CPSC 2018 are visible on nearly every seed, and the three collapsed VAE runs on CPSC 2018 (seeds 2, 5, 6) are identifiable as isolated low points}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Efficiency Analysis}{13}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:results-trends}{{5.2}{13}{Efficiency Analysis}{subsection.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces {\color  {blue}Paired per-seed differences in AUROC (QTS $-$ baseline) on (a) PTB-XL and (b) CPSC 2018, ordered by mean difference. Grey dots are the ten individual seed differences; the diamond with horizontal bars marks the mean and its 95\% confidence interval (blue for the Deep SVDD comparison, red otherwise); the vertical line is zero.} Intervals excluding zero indicate significance at the seed level; the Deep SVDD interval lies entirely below zero on PTB-XL and entirely above zero on CPSC 2018.}}{14}{figure.5}\protected@file@percent }
+\newlabel{fig:paired}{{5}{14}{\rev {Paired per-seed differences in AUROC (QTS $-$ baseline) on (a) PTB-XL and (b) CPSC 2018, ordered by mean difference. Grey dots are the ten individual seed differences; the diamond with horizontal bars marks the mean and its 95\% confidence interval (blue for the Deep SVDD comparison, red otherwise); the vertical line is zero.} Intervals excluding zero indicate significance at the seed level; the Deep SVDD interval lies entirely below zero on PTB-XL and entirely above zero on CPSC 2018}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Template Interpretability}{14}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Template Bank Gallery.}{14}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Efficiency comparison. {\color  {blue}Training time is mean wall-clock time per seed (including early stopping) on a single NVIDIA GPU; epochs is the mean number of epochs trained on PTB-XL. Revised with measured values.}}}{15}{table.5}\protected@file@percent }
+\newlabel{tab:efficiency}{{5}{15}{Efficiency comparison. \rev {Training time is mean wall-clock time per seed (including early stopping) on a single NVIDIA GPU; epochs is the mean number of epochs trained on PTB-XL. Revised with measured values.}}{table.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Normalised validation loss curves for all 11 deep methods on (a) PTB-XL and (b) CPSC 2018. {\color  {blue}QTS (red), Deep SVDD (blue), and VAE (orange)} are highlighted; remaining 8 methods are shown in grey. Shaded bands indicate $\pm $ 1 standard deviation over {\color  {blue}10} seeds{\color  {blue}; curves of runs that stopped early are padded with their final value}.}}{15}{figure.6}\protected@file@percent }
+\newlabel{fig:training}{{6}{15}{Normalised validation loss curves for all 11 deep methods on (a) PTB-XL and (b) CPSC 2018. \rev {QTS (red), Deep SVDD (blue), and VAE (orange)} are highlighted; remaining 8 methods are shown in grey. Shaded bands indicate $\pm $ 1 standard deviation over \rev {10} seeds\rev {; curves of runs that stopped early are padded with their final value}}{figure.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}Anomaly Explanation Map.}{15}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Learned templates ($-\mathbf  {w}_k$, Lead II) from the 64-template bank, grouped by hierarchical clustering into 8 representative clusters. Each template spans 310\,ms (one QT interval). Faded traces show all cluster members; bold lines mark the centroid-nearest representative. Template index and cluster size in parentheses.}}{16}{figure.7}\protected@file@percent }
+\newlabel{fig:gallery}{{7}{16}{Learned templates ($-\mathbf {w}_k$, Lead II) from the 64-template bank, grouped by hierarchical clustering into 8 representative clusters. Each template spans 310\,ms (one QT interval). Faded traces show all cluster members; bold lines mark the centroid-nearest representative. Template index and cluster size in parentheses}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.3}Template--Signal Alignment.}{16}{subsubsection.5.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Sub-group Analysis}{16}{subsection.5.4}\protected@file@percent }
+\newlabel{sec:subgroup}{{5.4}{16}{Sub-group Analysis}{subsection.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Anomaly explanation map. (a) Normal ECG: per-window scores remain low, with minimal above-threshold highlighting. (b) Abnormal ECG: contiguous high-score regions (red shading) precisely localise the morphological deviation. Dashed line indicates the threshold (90th percentile of normal window scores). Global anomaly scores $S(\mathbf  {x})$ are shown in the upper-right corner of each panel.}}{17}{figure.8}\protected@file@percent }
+\newlabel{fig:explain}{{8}{17}{Anomaly explanation map. (a) Normal ECG: per-window scores remain low, with minimal above-threshold highlighting. (b) Abnormal ECG: contiguous high-score regions (red shading) precisely localise the morphological deviation. Dashed line indicates the threshold (90th percentile of normal window scores). Global anomaly scores $S(\mathbf {x})$ are shown in the upper-right corner of each panel}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Template--signal alignment within a single 310\,ms (QT-interval) window. (a) Normal window: the best-matching template (dashed blue) closely tracks the signal (solid black), yielding a low mismatch score of 35. (b) Abnormal window: the template fails to match the pathological morphology, with large residual (red shading) concentrated in the QRS and ST-T regions, yielding a score of 2119. Horizontal arrows annotate the QRS ($\sim $0--100\,ms) and ST-T ($\sim $100--310\,ms) segments.}}{17}{figure.9}\protected@file@percent }
+\newlabel{fig:overlay}{{9}{17}{Template--signal alignment within a single 310\,ms (QT-interval) window. (a) Normal window: the best-matching template (dashed blue) closely tracks the signal (solid black), yielding a low mismatch score of 35. (b) Abnormal window: the template fails to match the pathological morphology, with large residual (red shading) concentrated in the QRS and ST-T regions, yielding a score of 2119. Horizontal arrows annotate the QRS ($\sim $0--100\,ms) and ST-T ($\sim $100--310\,ms) segments}{figure.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Per-subgroup AUROC for the top-6 methods on (a) PTB-XL and (b) CPSC 2018. Subgroups are divided into morphological (left of dashed line) and rhythm (right) categories. Error bars show $\pm $ 1 std over {\color  {blue}10} seeds.}}{18}{figure.10}\protected@file@percent }
+\newlabel{fig:subgroup}{{10}{18}{Per-subgroup AUROC for the top-6 methods on (a) PTB-XL and (b) CPSC 2018. Subgroups are divided into morphological (left of dashed line) and rhythm (right) categories. Error bars show $\pm $ 1 std over \rev {10} seeds}{figure.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Cross-Dataset Transfer}{18}{subsection.5.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces {\color  {blue}Cross-dataset transfer (AUROC, mean $\pm $ std over 10 seeds). Rows are training datasets, columns the evaluation dataset; diagonal entries are the in-domain results of Table~\ref {tab:main}.}}}{19}{table.6}\protected@file@percent }
+\newlabel{tab:transfer}{{6}{19}{\rev {Cross-dataset transfer (AUROC, mean $\pm $ std over 10 seeds). Rows are training datasets, columns the evaluation dataset; diagonal entries are the in-domain results of Table~\ref {tab:main}.}}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Scale Ablation}{19}{subsection.5.6}\protected@file@percent }
+\newlabel{sec:ablation}{{5.6}{19}{Scale Ablation}{subsection.5.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Scale ablation (mean $\pm $ std over {\color  {blue}10} seeds). Kernel sizes: $K=35$ (70\,ms, QRS), $K=155$ (310\,ms, QT interval), $K=315$ (630\,ms, full cycle). {\color  {blue}Revised values under the main-experiment protocol.}}}{19}{table.7}\protected@file@percent }
+\newlabel{tab:ablation}{{7}{19}{Scale ablation (mean $\pm $ std over \rev {10} seeds). Kernel sizes: $K=35$ (70\,ms, QRS), $K=155$ (310\,ms, QT interval), $K=315$ (630\,ms, full cycle). \rev {Revised values under the main-experiment protocol.}}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{20}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Why Does Simplicity Work?}{20}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Simplicity vs.\ Deep Architectures}{20}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Limitations}{21}{subsection.6.3}\protected@file@percent }
+\newlabel{sec:limitations}{{6.3}{21}{Limitations}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Clinical Implications}{21}{subsection.6.4}\protected@file@percent }
+\bibcite{Acharya2017}{1}
+\bibcite{Aharon2006}{2}
+\bibcite{Attia2019}{3}
+\bibcite{Audibert2020}{4}
+\bibcite{Chen2020}{5}
+\bibcite{GarretaBasora2025}{6}
+\bibcite{Hannun2019}{7}
+\bibcite{Ibrahim2025}{8}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{22}{section.7}\protected@file@percent }
+\bibcite{Kingma2014}{9}
+\bibcite{Kiranyaz2016}{10}
+\bibcite{Kohler2002}{11}
+\bibcite{Letz2023}{12}
+\bibcite{Linde1980}{13}
+\bibcite{LiuF2018}{14}
+\bibcite{LiuFT2008}{15}
+\bibcite{Malhotra2016}{16}
+\bibcite{Mairal2010}{17}
+\bibcite{Niyogi2008}{18}
+\bibcite{Pan1985}{19}
+\bibcite{Ribeiro2020}{20}
+\bibcite{Ruff2018}{21}
+\bibcite{Scholkopf2001}{22}
+\bibcite{Shen2020}{23}
+\bibcite{Strodthoff2021}{24}
+\bibcite{Tuli2022}{25}
+\bibcite{vanDenOord2017}{26}
+\bibcite{Wagner2020}{27}
+\bibcite{WHO2023}{28}
+\bibcite{Xu2022}{29}
+\bibcite{Zong2018}{30}
+\bibcite{ZhouB2019}{31}
+\bibcite{ZhouY2025}{32}
+\gdef \@abspage@last{24}

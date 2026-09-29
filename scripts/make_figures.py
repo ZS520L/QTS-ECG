@@ -29,7 +29,9 @@ from qts.config import load_config, resolve_path  # noqa: E402
 from qts.results import collect_metrics  # noqa: E402
 
 DS_LABEL = {"ptbxl": "PTB-XL", "cpsc2018": "CPSC 2018"}
-QTS_COLOR, BASE_COLOR = "#c0392b", "#7f8c8d"
+QTS_COLOR, SVDD_COLOR, VAE_COLOR = "#c0392b", "#2471a3", "#e67e22"
+BASE_COLOR = "#7f8c8d"
+HIGHLIGHT = {"qts": QTS_COLOR, "deep_svdd": SVDD_COLOR, "vae": VAE_COLOR}
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "savefig.bbox": "tight", "savefig.dpi": 200, "pdf.fonttype": 42})
@@ -48,28 +50,36 @@ def method_order(df, ds, methods):
 
 
 def fig_auroc_per_seed(df, labels, datasets, out):
-    fig, axes = plt.subplots(1, len(datasets), figsize=(3.6 * len(datasets), 4.2))
+    """Per-seed AUROC: seed dots + mean diamond, styled like the other paper figures."""
+    fig, axes = plt.subplots(1, len(datasets), figsize=(3.6 * len(datasets), 3.9))
     axes = np.atleast_1d(axes)
     rng = np.random.default_rng(0)
     for ax, ds in zip(axes, datasets):
-        order = method_order(df, ds, labels)
-        data = [df[(df.dataset == ds) & (df.method == m)].auroc.values for m in order]
-        ax.boxplot(data, vert=False, widths=0.55, showfliers=False,
-                   medianprops={"color": "k"}, boxprops={"color": "0.4"}, whiskerprops={"color": "0.4"})
-        for i, (m, v) in enumerate(zip(order, data)):
-            ax.scatter(v, i + 1 + rng.uniform(-0.15, 0.15, len(v)), s=10, zorder=3,
-                       color=QTS_COLOR if m == "qts" else BASE_COLOR, alpha=0.85)
-        ax.set_yticks(range(1, len(order) + 1), [labels[m] for m in order])
-        ax.axvline(0.5, ls=":", c="0.6", lw=0.8)
+        order = method_order(df, ds, labels)[::-1]          # best method on top
+        for i, m in enumerate(order):
+            v = df[(df.dataset == ds) & (df.method == m)].auroc.values
+            c = HIGHLIGHT.get(m, BASE_COLOR)
+            ax.plot([v.min(), v.max()], [i, i], lw=0.9, color=c, alpha=0.45,
+                    solid_capstyle="round", zorder=1)
+            ax.scatter(v, i + rng.uniform(-0.16, 0.16, len(v)), s=8, linewidths=0,
+                       color=BASE_COLOR if m not in HIGHLIGHT else c, alpha=0.75, zorder=2)
+            ax.scatter(v.mean(), i, marker="D", s=16, color=c, zorder=3,
+                       edgecolors="white", linewidths=0.5)
+        ax.set_yticks(range(len(order)), [labels[m] for m in order], fontsize=8)
+        ax.axvline(0.5, ls=":", c="0.6", lw=0.8, zorder=0)
+        ax.set_ylim(-0.7, len(order) - 0.3)
         ax.set_xlabel("AUROC")
-        ax.set_title(DS_LABEL[ds])
+        ax.set_title(DS_LABEL[ds], fontsize=10)
     fig.tight_layout()
     save(fig, out, "auroc_per_seed")
 
 
 def fig_paired(df, labels, datasets, out):
-    fig, axes = plt.subplots(1, len(datasets), figsize=(3.6 * len(datasets), 4.2), sharex=False)
+    """Paired per-seed differences: seed dots + mean with 95% CI, same visual language
+    as the other paper figures (thin spines, muted palette, small markers)."""
+    fig, axes = plt.subplots(1, len(datasets), figsize=(3.6 * len(datasets), 3.9), sharex=False)
     axes = np.atleast_1d(axes)
+    rng = np.random.default_rng(1)
     for ax, ds in zip(axes, datasets):
         piv = df[df.dataset == ds].pivot(index="seed", columns="method", values="auroc")
         if "qts" not in piv:
@@ -78,13 +88,17 @@ def fig_paired(df, labels, datasets, out):
         order = sorted(diffs, key=lambda m: np.mean(diffs[m]), reverse=True)
         for i, m in enumerate(order):
             d = diffs[m]
-            ax.scatter(d, np.full(len(d), i), s=9, color=BASE_COLOR, alpha=0.8)
-            ax.errorbar(d.mean(), i, xerr=1.96 * d.std(ddof=1) / np.sqrt(len(d)) if len(d) > 1 else 0,
-                        fmt="D", color=QTS_COLOR, ms=4, capsize=2)
-        ax.axvline(0, c="k", lw=0.8)
-        ax.set_yticks(range(len(order)), [labels[m] for m in order])
+            c = SVDD_COLOR if m == "deep_svdd" else QTS_COLOR
+            ax.scatter(d, i + rng.uniform(-0.15, 0.15, len(d)), s=8, linewidths=0,
+                       color=BASE_COLOR, alpha=0.75, zorder=2)
+            ci = 1.96 * d.std(ddof=1) / np.sqrt(len(d)) if len(d) > 1 else 0.0
+            ax.errorbar(d.mean(), i, xerr=ci, fmt="D", color=c, ms=4, lw=1.0, capsize=2.5,
+                        capthick=0.9, zorder=3, markeredgecolor="white", markeredgewidth=0.5)
+        ax.axvline(0, c="0.35", lw=0.9, zorder=1)
+        ax.set_yticks(range(len(order)), [labels[m] for m in order], fontsize=8)
+        ax.set_ylim(-0.7, len(order) - 0.3)
         ax.set_xlabel("AUROC(QTS) − AUROC(baseline)")
-        ax.set_title(DS_LABEL[ds])
+        ax.set_title(DS_LABEL[ds], fontsize=10)
     fig.tight_layout()
     save(fig, out, "paired_differences")
 
@@ -113,11 +127,10 @@ def fig_curves(bench_root: Path, labels, datasets, out, seed=None):
     Runs that stop early are padded with their last value so that all seeds
     contribute to every epoch.
     """
-    highlight = {"qts": QTS_COLOR, "deep_svdd": "#2471a3", "vae": "#e67e22"}
     fig, axes = plt.subplots(1, len(datasets), figsize=(3.6 * len(datasets), 3.0))
     axes = np.atleast_1d(axes)
     for ax, ds in zip(axes, datasets):
-        for m in sorted(labels, key=lambda k: k in highlight):
+        for m in sorted(labels, key=lambda k: k in HIGHLIGHT):
             files = sorted((bench_root / ds / m).glob("seed_*/train_log.csv"))
             if seed is not None:
                 files = [f for f in files if f.parent.name == f"seed_{seed}"]
@@ -133,10 +146,10 @@ def fig_curves(bench_root: Path, labels, datasets, out, seed=None):
             arr = np.stack([np.pad(c, (0, n - len(c)), mode="edge") for c in curves])
             mu, sd = arr.mean(0), arr.std(0)
             ep = np.arange(1, n + 1)
-            c = highlight.get(m, "0.65")
-            ax.plot(ep, mu, color=c, lw=1.5 if m in highlight else 0.7,
-                    label=labels[m] if m in highlight else None, zorder=3 if m in highlight else 1)
-            if m in highlight and len(curves) > 1:
+            c = HIGHLIGHT.get(m, "0.65")
+            ax.plot(ep, mu, color=c, lw=1.5 if m in HIGHLIGHT else 0.7,
+                    label=labels[m] if m in HIGHLIGHT else None, zorder=3 if m in HIGHLIGHT else 1)
+            if m in HIGHLIGHT and len(curves) > 1:
                 ax.fill_between(ep, mu - sd, mu + sd, color=c, alpha=0.18, lw=0)
         ax.set_xlabel("Epoch")
         ax.set_ylabel("Normalised validation loss")
