@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qts-ecg"
+version = "1.0.0"
+description = "Quadratic Template Scoring (QTS) for unsupervised 12-lead ECG anomaly detection"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.1", "numpy>=1.24", "scipy>=1.10", "scikit-learn>=1.3",
+  "pandas>=2.0", "matplotlib>=3.7", "pyyaml>=6.0", "wfdb>=4.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[tool.setuptools.packages.find]
+include = ["qts*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

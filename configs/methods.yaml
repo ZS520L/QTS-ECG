@@ -1,0 +1,88 @@
+# Hyper-parameters of QTS and the 12 baselines (Table 2 of the paper).
+# Values are fixed a priori and identical for both datasets.
+
+training:              # shared protocol for every deep method
+  max_epochs: 100
+  patience: 10         # early stopping on the normal-only validation loss
+  min_delta: 1.0e-4
+  weight_decay: 1.0e-5
+  grad_clip: 1.0
+  batch_size: 64
+  eta_min: 0.0         # cosine-annealing floor
+
+methods:
+  # --- classical (288 hand-crafted features) ------------------------------
+  ocsvm:
+    kind: classical
+    label: OC-SVM
+    params: {kernel: rbf, nu: 0.1, gamma: scale}
+  isolation_forest:
+    kind: classical
+    label: Isolation Forest
+    params: {n_estimators: 200, contamination: auto}
+
+  # --- reconstruction -----------------------------------------------------
+  ae:
+    kind: deep
+    label: AE
+    lr: 1.0e-3
+    params: {channels: [32, 64, 128, 256]}
+  vae:
+    kind: deep
+    label: VAE
+    lr: 1.0e-3
+    params: {channels: [32, 64, 128, 256], latent_dim: 128, beta: 0.001}
+  lstm_ae:
+    kind: deep
+    label: LSTM-AE
+    lr: 1.0e-3
+    params: {hidden_dim: 128, num_layers: 2, downsample: 10}
+  beatgan:
+    kind: deep
+    label: BeatGAN
+    lr: 2.0e-4
+    params: {channels: [32, 64, 128, 256], lambda_recon: 10.0}
+  usad:
+    kind: deep
+    label: USAD
+    lr: 1.0e-3
+    params: {channels: [32, 64, 128, 256], latent_dim: 128}
+  tranad:
+    kind: deep
+    label: TranAD
+    lr: 1.0e-3
+    batch_size: 32
+    params: {d_model: 256, n_heads: 4, n_layers: 2, d_ff: 512, patch_size: 50}
+  anomaly_transformer:
+    kind: deep
+    label: Anomaly Transformer
+    lr: 1.0e-4
+    batch_size: 32
+    params: {d_model: 512, n_heads: 8, n_layers: 3, d_ff: 256, patch_size: 50, lambda_ad: 3.0}
+
+  # --- density / one-class ------------------------------------------------
+  dagmm:
+    kind: deep
+    label: DAGMM
+    lr: 1.0e-3
+    params: {enc_channels: [32, 64, 128], latent_dim: 10, gmm_k: 4}
+  deep_svdd:
+    kind: deep
+    label: Deep SVDD
+    lr: 1.0e-4
+    params: {channels: [32, 64, 128], rep_dim: 128}
+  thoc:
+    kind: deep
+    label: THOC
+    lr: 1.0e-3
+    params: {hidden_dim: 128, n_layers: 3, n_clusters: [4, 8, 16], downsample: 10}
+
+  # --- proposed -----------------------------------------------------------
+  qts:
+    kind: deep
+    label: QTS (ours)
+    arch: qts
+    lr: 1.0e-2
+    eta_min: 1.0e-4
+    params: {n_templates: 64, kernel_sizes: [155], stride: 4}
+    init: {n_samples: 256}

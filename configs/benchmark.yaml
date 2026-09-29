@@ -1,0 +1,13 @@
+# Main comparison (Table 3). Seeds are fixed *before* any result is seen and
+# are shared by every method; each seed defines both the patient-level split
+# and the model initialisation, so results are paired across methods.
+defaults: [data.yaml, methods.yaml]
+
+benchmark:
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  datasets: [ptbxl, cpsc2018]
+  methods: [ocsvm, isolation_forest, ae, vae, lstm_ae, beatgan, dagmm, usad,
+            deep_svdd, thoc, tranad, anomaly_transformer, qts]
+  output_dir: results/benchmark
+  save_checkpoints: true
+  device: cuda

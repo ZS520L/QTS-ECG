@@ -1,0 +1,17 @@
+# Template-length ablation (Table 5). Same training protocol, seeds and splits
+# as the main benchmark, so "K=155" is the main QTS result and is not re-run.
+defaults: [data.yaml, methods.yaml]
+
+ablation:
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  datasets: [ptbxl, cpsc2018]
+  output_dir: results/ablation
+  reuse_from_benchmark: {qts_k155: qts}
+  base: qts                      # inherit lr / eta_min / init from methods.qts
+  variants:
+    qts_k35:       {label: "K=35 (QRS, 70 ms)",          kernel_sizes: [35]}
+    qts_k155:      {label: "K=155 (QT, 310 ms)",         kernel_sizes: [155]}
+    qts_k315:      {label: "K=315 (cycle, 630 ms)",      kernel_sizes: [315]}
+    qts_ms_sum:    {label: "35+155+315, sum",            kernel_sizes: [35, 155, 315], aggregation: sum}
+    qts_ms_learned: {label: "35+155+315, learned weights", kernel_sizes: [35, 155, 315], aggregation: learned}
+    qts_ms_max:    {label: "35+155+315, max",            kernel_sizes: [35, 155, 315], aggregation: max}

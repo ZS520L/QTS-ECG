@@ -1,0 +1,28 @@
+# data and generated artefacts
+data/
+logs/
+*.npy
+*.npz
+*.pt
+
+# per-run artefacts are large; the aggregated tables/figures are part of the release
+results/*
+!results/tables/
+!results/figures/
+
+# internal notes (not part of the public release)
+verification/
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

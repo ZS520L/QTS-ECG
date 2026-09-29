@@ -1,0 +1,26 @@
+\begin{table}[t]
+\centering
+\caption{Anomaly detection performance (mean $\pm$ s.d. over 10 seeds). Best in bold, second underlined.}
+\label{tab:main}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccc}
+\hline
+Method & PTB-XL AUROC & PTB-XL AUPRC & PTB-XL F1 & CPSC 2018 AUROC & CPSC 2018 AUPRC & CPSC 2018 F1 & Params \\
+\hline
+OC-SVM & 0.646$\pm$0.009 & 0.741$\pm$0.010 & 0.741$\pm$0.008 & 0.652$\pm$0.029 & 0.928$\pm$0.013 & 0.932$\pm$0.008 & --- \\
+Isolation Forest & 0.623$\pm$0.010 & 0.683$\pm$0.010 & 0.742$\pm$0.008 & 0.674$\pm$0.023 & 0.921$\pm$0.009 & 0.932$\pm$0.008 & --- \\
+AE & 0.574$\pm$0.015 & 0.668$\pm$0.014 & 0.741$\pm$0.008 & 0.696$\pm$0.022 & 0.936$\pm$0.014 & 0.932$\pm$0.008 & 610K \\
+VAE & 0.829$\pm$0.009 & 0.883$\pm$0.008 & 0.795$\pm$0.007 & 0.730$\pm$0.153 & 0.933$\pm$0.057 & 0.933$\pm$0.009 & 31.46M \\
+LSTM-AE & 0.440$\pm$0.011 & 0.575$\pm$0.012 & 0.741$\pm$0.008 & 0.633$\pm$0.024 & 0.916$\pm$0.016 & 0.932$\pm$0.009 & 411K \\
+BeatGAN & 0.568$\pm$0.016 & 0.666$\pm$0.014 & 0.741$\pm$0.008 & 0.704$\pm$0.021 & 0.939$\pm$0.013 & 0.932$\pm$0.009 & 914K \\
+DAGMM & 0.616$\pm$0.056 & 0.717$\pm$0.060 & 0.741$\pm$0.008 & 0.498$\pm$0.052 & 0.871$\pm$0.032 & 0.932$\pm$0.009 & 1.83M \\
+USAD & 0.697$\pm$0.018 & 0.776$\pm$0.016 & 0.744$\pm$0.008 & 0.774$\pm$0.019 & 0.956$\pm$0.010 & 0.932$\pm$0.008 & 914K \\
+Deep SVDD & \textbf{0.877$\pm$0.005} & \textbf{0.920$\pm$0.004} & \textbf{0.829$\pm$0.008} & \underline{0.824$\pm$0.015} & \underline{0.968$\pm$0.004} & \underline{0.934$\pm$0.007} & 92K \\
+THOC & 0.658$\pm$0.037 & 0.749$\pm$0.028 & 0.742$\pm$0.007 & 0.676$\pm$0.038 & 0.930$\pm$0.015 & 0.932$\pm$0.008 & 304K \\
+TranAD & 0.752$\pm$0.028 & 0.816$\pm$0.016 & 0.760$\pm$0.013 & 0.756$\pm$0.018 & 0.949$\pm$0.010 & 0.932$\pm$0.008 & 4.53M \\
+Anomaly Transformer & 0.484$\pm$0.104 & 0.629$\pm$0.088 & 0.741$\pm$0.008 & 0.459$\pm$0.033 & 0.865$\pm$0.015 & 0.932$\pm$0.008 & 4.61M \\
+QTS (Ours) & \underline{0.862$\pm$0.008} & \underline{0.905$\pm$0.008} & \underline{0.822$\pm$0.007} & \textbf{0.840$\pm$0.011} & \textbf{0.971$\pm$0.003} & \textbf{0.935$\pm$0.007} & 119K \\
+\hline
+\end{tabular}%
+}
+\end{table}

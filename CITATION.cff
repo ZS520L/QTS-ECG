@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "QTS-ECG: Quadratic Template Scoring for unsupervised ECG anomaly detection"
+version: 1.0.0
+license: MIT
+authors:
+  - family-names: Shen
+    given-names: Jing
+  - family-names: Li
+    given-names: Huashun
+  - family-names: Gao
+    given-names: Jian
+preferred-citation:
+  type: article
+  title: "Quadratic Template Scoring: A Parameter-Efficient Approach to Unsupervised ECG Anomaly Detection"
+  authors:
+    - family-names: Shen
+      given-names: Jing
+    - family-names: Li
+      given-names: Huashun
+    - family-names: Gao
+      given-names: Jian
+  year: 2026

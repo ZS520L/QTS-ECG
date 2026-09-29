@@ -1,0 +1,17 @@
+# Data locations and preprocessing. Relative paths are resolved against the
+# repository root; every path can also be overridden on the command line.
+data:
+  raw_dirs:
+    ptbxl: data/raw/ptbxl          # PTB-XL v1.0.3 (contains ptbxl_database.csv)
+    cpsc2018: data/raw/cpsc2018    # CPSC 2018 (contains g1/ ... g7/)
+  processed_root: data/processed
+  preprocessing:
+    fs: 500            # Hz - both datasets are recorded at 500 Hz
+    seq_len: 5000      # 10 s
+    low: 0.5           # Hz, 4th-order zero-phase Butterworth band-pass
+    high: 45.0
+    normalize: true    # per-lead z-score (after padding / truncation)
+  split:
+    ratios: [0.70, 0.15, 0.15]   # patient-level train / val / test
+  loader:
+    num_workers: 0
